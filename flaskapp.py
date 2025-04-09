@@ -8,7 +8,8 @@ app.secret_key = 'your_secret_key' # this is an artifact for using flash display
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    results = e
+    return render_template('home.html',results = results)
 
 
 
