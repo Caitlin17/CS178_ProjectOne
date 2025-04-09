@@ -10,7 +10,7 @@ def get_conn():
         user=creds.user,
         password=creds.password,
         db=creds.db,
-        cursorclass=pymysql.cursors.Dictcursor
+        cursorclass=pymysql.cursors.DictCursor
     )
 
 def execute_query(query,args=()):
