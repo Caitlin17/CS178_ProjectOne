@@ -1,51 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>SQL Results</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-    </style>
+    <title>Home</title>
 </head>
 <body>
-    <h1>SQL Query Results</h1>
-    {% if results %}
-        <table>
-            <thead>
-                <tr>
-                    {% for column in results[0].keys() %}
-                        <th>{{ column }}</th>
-                    {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in results %}
-                    <tr>
-                        {% for value in row.values() %}
-                            <td>{{ value }}</td>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>No results found.</p>
-    {% endif %}
+    <h1>Welcome to the User Management App</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+        {% for category, message in messages %}
+          <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    <ul>
+        <li><a href="{{ url_for('add_user') }}">Add User</a></li>
+        <li><a href="{{ url_for('delete_user') }}">Delete User</a></li>
+        <li><a href="{{ url_for('display_users') }}">Display Users</a></li>
+        <li><a href="{{ url_for('update_user') }}">Update User</a></li>
+
+    </ul>
 </body>
 </html>

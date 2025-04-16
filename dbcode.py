@@ -28,3 +28,6 @@ def show_movies():
     query = "SELECT title FROM movie limit 10"
     return execute_query(query)
 
+
+
+

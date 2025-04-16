@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display Users</title>
+</head>
+<body>
+    <h1>List of Users</h1>
+    {% if users %}
+        <table border="1">
+            <tr>
+                <th>First Name</th>
+                <th>Favorite Genre</th>
+            </tr>
+            {% for first_name, genre in users %}
+            <tr>
+                <td>{{ first_name }}</td>
+                <td>{{ genre }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No users found.</p>
+    {% endif %}
+    <a href="{{ url_for('home') }}">Back to Home</a>
+</body>
+</html>
