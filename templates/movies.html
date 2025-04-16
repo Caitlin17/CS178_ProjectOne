@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><title>All Movies</title></head>
+<body>
+  <h1>All Movies (first 10)</h1>
+  {% if movies %}
+    <ul>
+      {% for m in movies %}
+        <li>{{ m.title }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No movies found.</p>
+  {% endif %}
+  <a href="{{ url_for('home') }}">Back to Home</a>
+</body>
+</html>

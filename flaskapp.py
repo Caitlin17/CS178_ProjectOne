@@ -15,7 +15,47 @@ def home():
     results = show_movies()
     return render_template('home.html',results=results)
 
+@app.route('/movies')
+def movies():
+    movies_list = show_movies()  # [{ 'title': '…' }, …]
+    return render_template('movies.html', movies=movies_list)
 
+# ─── New Route: Recommend Movies by FavGenre ────────────────
+@app.route('/recommend-movies', methods=['GET', 'POST'])
+def recommend_movies():
+    if request.method == 'POST':
+        name = request.form['name']
+        # 1) get FavGenre from Dynamo
+        try:
+            resp = table.get_item(Key={'Name': name})
+            user = resp.get('Item')
+            if not user:
+                flash('User not found.', 'danger')
+                return redirect(url_for('recommend_movies'))
+            fav_genre = user['FavGenre']
+        except ClientError as e:
+            flash(f"Error fetching user: {e.response['Error']['Message']}", 'danger')
+            return redirect(url_for('recommend_movies'))
+
+        # 2) query SQL for 5 movies matching that genre
+        sql = """
+            SELECT m.title
+              FROM movie m
+              JOIN movie_genres mg ON m.movie_id = mg.movie_id
+              JOIN genre g       ON mg.genre_id = g.genre_id
+             WHERE g.genre_name = %s
+             LIMIT 5
+        """
+        recs = execute_query(sql, str(fav_genre,))  # [{ 'title': '…' }, …]
+        return render_template(
+            'recommendations.html',
+            name=name,
+            genre=fav_genre,
+            movies=recs
+        )
+
+    # GET → show form
+    return render_template('recommend_movies.html')
 
 
 #---CRUD dynamo routes----

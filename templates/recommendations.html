@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head><title>Recommendations for {{ name }}</title></head>
+<body>
+  <h1>Recommendations for {{ name }}</h1>
+  <p>Favorite Genre: <strong>{{ genre }}</strong></p>
+
+  {% if movies %}
+    <ul>
+      {% for m in movies %}
+        <li>{{ m.title }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No matching movies found for this genre.</p>
+  {% endif %}
+
+  <a href="{{ url_for('recommend_movies') }}">Try another user</a><br>
+  <a href="{{ url_for('home') }}">Back to Home</a>
+</body>
+</html>

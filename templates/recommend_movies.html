@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head><title>Recommend Movies</title></head>
+<body>
+  <h1>Get Movie Recommendations</h1>
+  <form method="post">
+    Full Name: <input type="text" name="name" required><br>
+    <input type="submit" value="Get Recommendations">
+  </form>
+  <a href="{{ url_for('home') }}">Back to Home</a>
+</body>
+</html>
