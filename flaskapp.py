@@ -4,17 +4,19 @@ from dbcode import *
 from botocore.exceptions import ClientError
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Replace with a secure key
+app.secret_key = 'your_secret_key'  
 
 # Initialize DynamoDB
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 table = dynamodb.Table('Users')
 
+#Displaying Home Page
 @app.route('/')
 def home():
     results = show_movies()
     return render_template('home.html',results=results)
 
+#Displaying a list of movies
 @app.route('/movies')
 def movies():
     movies_list = show_movies()  # [{ 'title': '…' }, …]
@@ -60,6 +62,7 @@ def recommend_movies():
 
 #---CRUD dynamo routes----
 
+#Create
 @app.route('/add-user', methods=['GET', 'POST'])
 def add_user():
     if request.method == 'POST':
@@ -81,7 +84,7 @@ def add_user():
         return redirect(url_for('home'))
     return render_template('add_user.html')
 
-
+#Delete
 @app.route('/delete-user', methods=['GET', 'POST'])
 def delete_user():
     if request.method == 'POST':
@@ -101,7 +104,7 @@ def delete_user():
         return redirect(url_for('home'))
     return render_template('delete_user.html')
 
-
+#Read
 @app.route('/display-users')
 def display_users():
     try:
@@ -118,7 +121,7 @@ def display_users():
         users_list = []
     return render_template('display_users.html', users=users_list)
 
-
+#Update
 @app.route('/update-user', methods=['GET', 'POST'])
 def update_user():
     if request.method == 'POST':
